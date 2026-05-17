@@ -1,0 +1,16 @@
+:root {
+  --bg-primary: #FDF8E1;      
+  --color-brand: #3498DB;   
+  --color-brand-hover: #2980B9;
+  
+  --text-main: #2C3E50;       
+  --text-muted: #7F8C8D;     
+  --white: #FFFFFF;
+  
+  --font-title: 'Poppins', sans-serif;
+  --font-body: 'Lato', sans-serif;
+  
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+}
