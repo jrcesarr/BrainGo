@@ -28,7 +28,7 @@ export default function Home() {
             <img 
               src={braingoLogo} 
               alt="Logo BrainGo" 
-              className="brain-logo-img" 
+              className="brain-logo-img jumping-logo" 
             />
           </div>
           <h1>BrainGo</h1>

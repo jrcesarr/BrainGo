@@ -52,3 +52,36 @@
   height: auto;        
   object-fit: contain; 
 }
+
+/* Efeito de pulo */
+
+@keyframes jumpWithRebound {
+  0% {
+    transform: translateY(0);             
+    animation-timing-function: cubic-bezier(0.3, 1, 0.4, 1); 
+  }
+  30% {
+    transform: translateY(-45px);        
+    animation-timing-function: cubic-bezier(0.6, 0, 0.7, 0); 
+  }
+  50% {
+    transform: translateY(0);             
+    animation-timing-function: ease-out;  
+  }
+  65% {
+    transform: translateY(-15px);         
+    animation-timing-function: cubic-bezier(0.3, 1, 0.4, 1);
+  }
+  80% {
+    transform: translateY(0);             
+  }
+  100% {
+    transform: translateY(0);             
+  }
+}
+
+.jumping-logo {
+  animation: jumpWithRebound 1.8s cubic-bezier(0.28, 0.84, 0.42, 1) infinite;
+  animation-delay: 0.8s;
+  will-change: transform;
+}
