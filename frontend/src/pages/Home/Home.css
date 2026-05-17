@@ -28,8 +28,9 @@
 
 .home-header h1 {
   font-family: var(--font-title);
-  font-size: 32px;
-  color: var(--text-main);
+  font-size: 40px;
+  font-weight: 500;
+  color: var(--color-brand);
   margin: 0 0 8px 0;
 }
 
