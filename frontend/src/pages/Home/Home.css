@@ -7,14 +7,14 @@
   padding: 20px;
 }
 
-/* Limita o tamanho para simular uma tela de telemóvel/mobile-first */
+
 .mobile-card {
   background-color: var(--white);
   border-radius: var(--radius-lg);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
   padding: 40px 24px;
   width: 100%;
-  max-width: 400px; /* Tamanho perfeito para simular mobile no desktop */
+  max-width: 400px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -23,7 +23,7 @@
 
 .home-header .brain-logo {
   font-size: 48px;
-  margin-bottom: 12px;
+  margin: 20px 0;
 }
 
 .home-header h1 {
@@ -37,7 +37,7 @@
   font-family: var(--font-body);
   font-size: 15px;
   color: var(--text-muted);
-  margin: 0;
+  margin: 20px 0;
   line-height: 1.4;
 }
 
@@ -45,4 +45,10 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+}
+
+.brain-logo-img {
+  width: 120px;         
+  height: auto;        
+  object-fit: contain; 
 }
