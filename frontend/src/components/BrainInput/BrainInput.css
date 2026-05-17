@@ -1,0 +1,40 @@
+.brain-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.brain-input-label {
+  font-family: var(--font-title);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+  text-align: left;
+}
+
+.brain-input {
+  font-family: var(--font-body);
+  font-size: 16px;
+  padding: 14px 16px;
+  border: 2px solid #E2E8F0; 
+  border-radius: var(--radius-md);
+  background-color: var(--white);
+  color: var(--text-main);
+  outline: none;
+  transition: all 0.2s ease-in-out;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+.brain-input:focus {
+  border-color: var(--color-brand);
+  box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.15); 
+}
+
+.brain-input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
+}
