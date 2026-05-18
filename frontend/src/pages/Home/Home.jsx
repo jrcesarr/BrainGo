@@ -6,16 +6,17 @@ import './Home.css';
 
 export default function Home() {
   const [nome, setNome] = useState('');
+  const [senha, setSenha] = useState('');
 
   const handleLogin = (e) => {
     e.preventDefault(); 
-    if (nome.trim() === '') {
-      alert('Por favor, introduza o seu nome para começar!');
+    if (nome.trim() === '' || senha.trim() === '') {
+      alert('Por favor, introduza seu nome e sua senha para começar!');
       return;
     }
     
     // Por enquanto mostra o alerta.
-    alert(`Bem-vindo ao BrainGo, ${nome}!`);
+    alert(`Bem-vindo ao BrainGo, ${nome}!. Sua senha é ${senha}!`);
   };
 
   return (
@@ -38,15 +39,23 @@ export default function Home() {
         {/* Formulário de Entrada */}
         <form onSubmit={handleLogin} className="home-form">
           <BrainInput 
-            label="Como quer ser chamado?" 
+            label="Insira o nome e a senha para o login" 
             placeholder="Digite o seu nome..." 
             type="text"
             value={nome}
             onChange={(e) => setNome(e.target.value)}
           />
-          
+
+          <BrainInput 
+            label="" 
+            placeholder="Digite a sua senha..." 
+            type="password"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+          />
+        
           <BrainButton type="submit">
-            Começar Jornada
+            Entrar
           </BrainButton>
         </form>
 
