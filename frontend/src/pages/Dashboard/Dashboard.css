@@ -181,3 +181,138 @@
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.task-item.completed {
+  opacity: 0.6;
+  background-color: #F1F5F9;
+}
+
+.task-item.completed span {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.finance-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.balance-box {
+  padding: 20px;
+  border-radius: var(--radius-md);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.balance-box.positive {
+  background-color: #E6F4EA;
+  color: #137333;
+}
+
+.balance-box.negative {
+  background-color: #FCE8E6;
+  color: #C5221F;
+}
+
+.balance-box span {
+  font-family: var(--font-body);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.balance-box h2 {
+  font-family: var(--font-title);
+  font-size: 28px;
+  margin: 6px 0 0 0;
+}
+
+.finance-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.finance-form input, .finance-form select {
+  font-family: var(--font-body);
+  font-size: 15px;
+  padding: 12px;
+  border: 2px solid #E2E8F0;
+  border-radius: var(--radius-md);
+  outline: none;
+  background-color: var(--white);
+}
+
+.finance-form input:focus, .finance-form select:focus {
+  border-color: var(--text-main);
+}
+
+.finance-row {
+  display: flex;
+  gap: 10px;
+}
+
+.finance-row input {
+  flex: 2;
+}
+
+.finance-row select {
+  flex: 1.2;
+  cursor: pointer;
+}
+
+.finance-submit-btn {
+  background-color: var(--text-main);
+  color: var(--white);
+  font-family: var(--font-title);
+  font-weight: 600;
+  border: none;
+  padding: 14px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.finance-submit-btn:hover {
+  background-color: #1A252F;
+}
+
+.transaction-list h3 {
+  font-family: var(--font-title);
+  font-size: 16px;
+  color: var(--text-main);
+  margin: 0 0 12px 0;
+  text-align: left;
+}
+
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  border-left: 5px solid transparent;
+  background-color: #F8FAFC;
+}
+
+.transaction-item.entrada {
+  border-left-color: #2ECC71;
+  color: #137333;
+}
+
+.transaction-item.saida {
+  border-left-color: #E74C3C;
+  color: #C5221F;
+}
