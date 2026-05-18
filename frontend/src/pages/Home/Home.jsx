@@ -4,7 +4,7 @@ import BrainButton from '../../components/BrainButton/BrainButton';
 import braingoLogo from '../../assets/braingo_logo.png';
 import './Home.css';
 
-export default function Home() {
+export default function Home( {onLogin} ) {
   const [nome, setNome] = useState('');
   const [senha, setSenha] = useState('');
 
@@ -15,8 +15,11 @@ export default function Home() {
       return;
     }
     
-    // Por enquanto mostra o alerta.
-    alert(`Bem-vindo ao BrainGo, ${nome}!. Sua senha é ${senha}!`);
+    // Teste de Login
+    if(senha === 'abc' && nome === 'abc'){
+      onLogin(nome);
+    }
+
   };
 
   return (
