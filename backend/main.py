@@ -146,3 +146,35 @@ def alternar_tarefa(tarefa_id: int, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(tarefa_db)
     return tarefa_db
+
+# --- ROTAS DE FINANÇAS (TRANSAÇÕES) ---
+
+# 1. Buscar todo o histórico financeiro de um usuário específico
+@app.get("/transacoes/{usuario_id}", response_model=list[TransacaoResposta])
+def listar_transacoes(usuario_id: int, db: Session = Depends(get_db)):
+    return db.query(models.Transacao).filter(models.Transacao.usuario_id == usuario_id).all()
+
+# 2. Criar um novo registro financeiro (Entrada ou Saída)
+@app.post("/transacoes/", response_model=TransacaoResposta)
+def criar_transacao(nova_transacao: TransacaoCriar, db: Session = Depends(get_db)):
+    transacao_db = models.Transacao(
+        descricao=nova_transacao.descricao,
+        valor=nova_transacao.valor,
+        tipo=nova_transacao.tipo,
+        usuario_id=nova_transacao.usuario_id
+    )
+    db.add(transacao_db)
+    db.commit()
+    db.refresh(transacao_db)
+    return transacao_db
+
+# 3. Deletar um registro financeiro (Opcional, mas muito útil!)
+@app.delete("/transacoes/{transacao_id}")
+def deletar_transacao(transacao_id: int, db: Session = Depends(get_db)):
+    transacao_db = db.query(models.Transacao).filter(models.Transacao.id == transacao_id).first()
+    if not transacao_db:
+        raise HTTPException(status_code=404, detail="Registro não encontrado")
+    
+    db.delete(transacao_db)
+    db.commit()
+    return {"mensagem": "Registro deletado com sucesso!"}
