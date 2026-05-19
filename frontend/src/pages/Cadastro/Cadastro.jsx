@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import BrainInput from '../../components/BrainInput/BrainInput';
 import BrainButton from '../../components/BrainButton/BrainButton';
 import braingoLogo from '../../assets/braingo_logo.png';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 import './Cadastro.css';
 
 export default function Cadastro() {
@@ -11,12 +12,39 @@ export default function Cadastro() {
 
   // Lembrar de verificar se o nome já existe 
 
-  const handleCadastro = (e) => {
+  const handleCadastro = async (e) => {
     e.preventDefault(); 
+
     if (nome.trim() === '' || senha.trim() === '') {
-      alert('Escreva em todos os campos!');
-      return;
+        alert('Escreva em todos os campos!');
+        return;
     }
+
+    try {
+      // 3. Disparamos o POST para o FastAPI
+      // Lembra que o FastAPI espera a chave "usuario", então passamos o nosso estado "nome" para ela
+        const resposta = await axios.post("http://127.0.0.1:8000/usuarios/", {
+        usuario: nome,
+        senha: senha
+        });
+
+      // Se deu certo, entra aqui:
+        alert(resposta.data.mensagem); // Vai mostrar "Usuário criado com sucesso!"
+      
+      // Opcional: Limpar os campos após o cadastro
+      setNome('');
+      setSenha('');
+
+    } catch (erro) {
+        // 4. Se o FastAPI der erro (tipo o Erro 400 de usuário já existente), cai aqui:
+        if (erro.response && erro.response.data) {
+            // Mostra o erro exato que colocamos no FastAPI ("Esse nome de usuário já está em uso.")
+            alert(erro.response.data.detail);
+        } else {
+            alert("Não foi possível conectar ao servidor.");
+        }
+    }
+
   };
 
   return (
@@ -54,7 +82,7 @@ export default function Cadastro() {
           />
         
           <BrainButton type="submit">
-            Entrar
+            Cadastrar
           </BrainButton>
         </form>
 
