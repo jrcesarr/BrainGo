@@ -1,0 +1,81 @@
+.cadastro-page-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  padding: 20px;
+}
+
+
+.mobile-card {
+  background-color: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  padding: 40px 24px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.cadastro-header .brain-logo {
+  font-size: 48px;
+  margin: 20px 0;
+}
+
+.cadastro-header h1 {
+  font-family: var(--font-title);
+  font-size: 40px;
+  font-weight: 500;
+  color: var(--color-brand);
+  margin: 0 0 8px 0;
+}
+
+.cadastro-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.brain-logo-img {
+  width: 120px;         
+  height: auto;        
+  object-fit: contain; 
+}
+
+/* Efeito de pulo */
+
+@keyframes jumpWithRebound {
+  0% {
+    transform: translateY(0);             
+    animation-timing-function: cubic-bezier(0.3, 1, 0.4, 1); 
+  }
+  30% {
+    transform: translateY(-45px);        
+    animation-timing-function: cubic-bezier(0.6, 0, 0.7, 0); 
+  }
+  50% {
+    transform: translateY(0);             
+    animation-timing-function: ease-out;  
+  }
+  65% {
+    transform: translateY(-15px);         
+    animation-timing-function: cubic-bezier(0.3, 1, 0.4, 1);
+  }
+  80% {
+    transform: translateY(0);             
+  }
+  100% {
+    transform: translateY(0);             
+  }
+}
+
+.jumping-logo {
+  animation: jumpWithRebound 1.8s cubic-bezier(0.28, 0.84, 0.42, 1) infinite;
+  animation-delay: 0.8s;
+  will-change: transform;
+}
+
