@@ -26,7 +26,7 @@ export default function Home( {onLogin} ) {
 
       // 4. Se o login funcionar, acionamos a sua função onLogin passando o nome
       // No futuro, podemos passar o ID também: resposta.data.id
-      onLogin(resposta.data.usuario);
+      onLogin(resposta.data);
 
     } catch (erro) {
       // 5. Captura erros (ex: usuário ou senha errados) enviados pelo FastAPI
