@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import BrainInput from '../../components/BrainInput/BrainInput';
 import BrainButton from '../../components/BrainButton/BrainButton';
 import braingoLogo from '../../assets/braingo_logo.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Cadastro.css';
 
@@ -10,7 +10,7 @@ export default function Cadastro() {
   const [nome, setNome] = useState('');
   const [senha, setSenha] = useState('');
 
-  // Lembrar de verificar se o nome já existe 
+  const navigate = useNavigate();
 
   const handleCadastro = async (e) => {
     e.preventDefault(); 
@@ -30,10 +30,13 @@ export default function Cadastro() {
 
       // Se deu certo, entra aqui:
         alert(resposta.data.mensagem); // Vai mostrar "Usuário criado com sucesso!"
+        navigate("/");
+
+        // Opcional: Limpar os campos após o cadastro
+        setNome('');
+        setSenha('');
+
       
-      // Opcional: Limpar os campos após o cadastro
-      setNome('');
-      setSenha('');
 
     } catch (erro) {
         // 4. Se o FastAPI der erro (tipo o Erro 400 de usuário já existente), cai aqui:
