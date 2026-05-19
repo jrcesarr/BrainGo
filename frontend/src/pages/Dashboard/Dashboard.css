@@ -316,3 +316,25 @@
   border-left-color: #E74C3C;
   color: #C5221F;
 }
+
+.transaction-right {
+    display: flex;
+    align-items: center;
+    gap: 12px; 
+} 
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+    transition: transform 0.2s;
+}
+
+.delete-btn:hover {
+    transform: scale(1.3); 
+}
