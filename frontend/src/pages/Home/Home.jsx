@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import BrainInput from '../../components/BrainInput/BrainInput';
 import BrainButton from '../../components/BrainButton/BrainButton';
 import braingoLogo from '../../assets/braingo_logo.png';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import './Home.css';
 
 export default function Home( {onLogin} ) {
@@ -61,6 +62,13 @@ export default function Home( {onLogin} ) {
             Entrar
           </BrainButton>
         </form>
+
+        <div className="home-cadastro">
+          <p>Ainda não tem conta?</p>
+          <Link to="/cadastro">
+            Cadastre-se aqui!
+          </Link>
+        </div>
 
       </div>
     </div>
