@@ -94,6 +94,22 @@ export default function Dashboard({ userName, userId }) {
         }
     };
 
+    // Função assincrona para deletar transações
+    const deleteTransaction = async (id) => {
+        // Confirmação antes de apagar
+        if (!window.confirm("Tem certeza que deseja excluir este registro?")) return;
+
+        try {
+            // Dispara o DELETE enviando o ID da transação na URL
+            await axios.delete(`http://127.0.0.1:8000/transacoes/${id}`);
+            // O .filter() cria uma nova lista mantendo apenas quem tem o ID diferente do que foi deletado
+            setTransactions(transactions.filter(t => t.id !== id));
+
+        } catch (erro) {
+            alert("Não foi possível deletar o registro financeiro.");
+        }
+    };
+
     const saldoTotal = transactions.reduce((acumulador, atual) => {
       // Se o valor não existir, a conta não quebra
       const valorNum = parseFloat(atual.valor) || 0;
