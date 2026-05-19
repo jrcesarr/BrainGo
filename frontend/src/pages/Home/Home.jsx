@@ -6,10 +6,14 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import './Home.css';
 import axios from 'axios';
 
+// Interage com a API para coletar os dados necessários 
+
 export default function Home( {onLogin} ) {
+  // Controla o que está sendo escrito em tempo real
   const [nome, setNome] = useState('');
   const [senha, setSenha] = useState('');
 
+  // Função assincrona que trata a requisição, bloqueando o recarregamento da página com o preventDefault.
   const handleLogin = async (e) => {
     e.preventDefault(); 
     if (nome.trim() === '' || senha.trim() === '') {
@@ -17,15 +21,14 @@ export default function Home( {onLogin} ) {
       return;
     }
     
-    try {
-      // 3. Chamar a API de login enviando os dados digitados
+    try { 
+      // Chama a API de login enviando os dados digitados
       const resposta = await axios.post("http://127.0.0.1:8000/login", {
         usuario: nome,
         senha: senha
       });
 
-      // 4. Se o login funcionar, acionamos a sua função onLogin passando o nome
-      // No futuro, podemos passar o ID também: resposta.data.id
+      // 4. Se o login funcionar, acionamos a sua função onLogin 
       onLogin(resposta.data);
 
     } catch (erro) {
