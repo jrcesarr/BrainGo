@@ -66,3 +66,26 @@ def registrar_usuario(novo_usuario: UsuarioCriar, db: Session = Depends(get_db))
         "id": usuario_db.id, 
         "usuario": usuario_db.usuario
     }
+
+@app.post("/login")
+def login_usuario(dados_login: UsuarioCriar, db: Session = Depends(get_db)):
+    # 1. Busca o usuário no banco pelo nome digitado
+    usuario_db = db.query(models.Usuario).filter(models.Usuario.usuario == dados_login.usuario).first()
+    
+    # 2. Se o usuário não existir, trava aqui
+    if not usuario_db:
+        raise HTTPException(status_code=400, detail="Usuário ou senha incorretos.")
+    
+    # 3. Usa a função do bcrypt para comparar a senha pura com o hash do banco
+    senha_correta = auth.verificar_senha(dados_login.senha, usuario_db.senha_hash)
+    
+    # 4. Se a senha estiver errada, trava aqui
+    if not senha_correta:
+        raise HTTPException(status_code=400, detail="Usuário ou senha incorretos.")
+    
+    # 5. Se passou por tudo, o login deu certo! Retornamos os dados dele
+    return {
+        "mensagem": "Login realizado com sucesso!",
+        "id": usuario_db.id,
+        "usuario": usuario_db.usuario
+    }
