@@ -1,6 +1,11 @@
 from fastapi import FastAPI
 from auth import gerar_hash_senha
 
+import models
+from database import engine
+
+models.Base.metadata.create_all(bind=engine)
+
 app = FastAPI(
     title="BrainGo API",
     description="Backend para gerenciamento de usuários, tarefas e finanças",
