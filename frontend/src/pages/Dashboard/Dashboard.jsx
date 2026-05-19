@@ -70,21 +70,28 @@ export default function Dashboard({ userName, userId }) {
         }
     };
 
-    // --- MANIPULAÇÃO FINANCEIRA (Continua local por enquanto) ---
-    const addTransaction = (e) => {
+    // Função assincrona para adicionar transações
+    const addTransaction = async (e) => {
         e.preventDefault();
         if (finDescription.trim() === '' || finValue === '') return;
 
-        const novaTransacao = {
-            id: Date.now(),
-            description: finDescription,
-            value: parseFloat(finValue), 
-            type: finType
-        };
+        try {
+            const resposta = await axios.post("http://127.0.0.1:8000/transacoes/", {
+                descricao: finDescription,
+                valor: parseFloat(finValue),
+                tipo: finType,
+                usuario_id: userId // Vincula a transação ao usuário logado
+            });
 
-        setTransactions([...transactions, novaTransacao]);
-        setFinDescription('');
-        setFinValue('');
+            // Adiciona no estado do React a transação criada no banco
+            setTransactions([...transactions, resposta.data]);
+            
+            // Limpa os campos do formulário
+            setFinDescription('');
+            setFinValue('');
+        } catch (erro) {
+            alert("Não foi possível salvar o registro financeiro.");
+        }
     };
 
     const saldoTotal = transactions.reduce((acumulador, atual) => {
@@ -200,10 +207,10 @@ export default function Dashboard({ userName, userId }) {
                     <p className="empty-message">Nenhum movimento registrado.</p>
                   ) : (
                     transactions.map(t => (
-                      <div key={t.id} className={`transaction-item ${t.type}`}>
-                        <span>{t.description}</span>
+                      <div key={t.id} className={`transaction-item ${t.tipo}`}>
+                        <span>{t.descricao}</span>
                         <strong>
-                          {t.type === 'entrada' ? '+' : '-'} R$ {t.value.toFixed(2)}
+                          {t.tipo === 'entrada' ? '+' : '-'} R$ {t.valor.toFixed(2)}
                         </strong>
                       </div>
                     ))
