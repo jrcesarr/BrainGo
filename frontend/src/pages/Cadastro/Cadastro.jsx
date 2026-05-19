@@ -89,6 +89,13 @@ export default function Cadastro() {
           </BrainButton>
         </form>
 
+         <div className="cadastro-home">
+            <p>Já possui uma conta?</p>
+            <Link to="/">
+                Entre aqui!
+            </Link>
+        </div>
+
       </div>
     </div>
   );

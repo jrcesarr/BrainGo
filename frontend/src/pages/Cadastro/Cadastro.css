@@ -79,3 +79,16 @@
   will-change: transform;
 }
 
+.cadastro-home p {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.cadastro-home a {
+  text-decoration: none;
+  color: var( --color-brand);
+  line-height: 1.4;
+  cursor: pointer;
+}
