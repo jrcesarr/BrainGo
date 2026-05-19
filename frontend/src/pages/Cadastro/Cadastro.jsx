@@ -21,27 +21,23 @@ export default function Cadastro() {
     }
 
     try {
-      // 3. Disparamos o POST para o FastAPI
-      // Lembra que o FastAPI espera a chave "usuario", então passamos o nosso estado "nome" para ela
+        // Chama a API de usuários para cadastrarmento
         const resposta = await axios.post("http://127.0.0.1:8000/usuarios/", {
         usuario: nome,
         senha: senha
         });
 
-      // Se deu certo, entra aqui:
-        alert(resposta.data.mensagem); // Vai mostrar "Usuário criado com sucesso!"
+        alert(resposta.data.mensagem); // Mostra "Usuário criado com sucesso!" do Main.py
         navigate("/");
 
-        // Opcional: Limpar os campos após o cadastro
+        // Limpa os campos após o cadastro
         setNome('');
         setSenha('');
 
       
 
     } catch (erro) {
-        // 4. Se o FastAPI der erro (tipo o Erro 400 de usuário já existente), cai aqui:
         if (erro.response && erro.response.data) {
-            // Mostra o erro exato que colocamos no FastAPI ("Esse nome de usuário já está em uso.")
             alert(erro.response.data.detail);
         } else {
             alert("Não foi possível conectar ao servidor.");
