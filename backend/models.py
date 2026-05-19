@@ -14,7 +14,7 @@ class Usuario(Base):
     transacoes = relationship("Transacao", back_populates="dono", cascade="all, delete-orphan")
 
 class Tarefa(Base):
-    __tablename__ = "tarefase"
+    __tablename__ = "tarefas"
 
     id = Column(Integer, primary_key=True, index=True)
     texto = Column(String, nullable=False)
