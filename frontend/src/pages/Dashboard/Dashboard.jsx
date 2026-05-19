@@ -17,19 +17,26 @@ export default function Dashboard({ userName, userId }) {
     const [finValue, setFinValue] = useState('');
     const [finType, setFinType] = useState('entrada');
 
-    // O useEffect carrega as tarefas do banco de dados assim que o usuário entra na tela
+    // O useEffect carrega as tarefas e as finanças do banco de dados assim que o usuário entra na tela
     useEffect(() => {
-        const carregarTarefas = async () => {
-            if (!userId) return;
-            try {
-                const resposta = await axios.get(`http://127.0.0.1:8000/tarefas/${userId}`);
-                setTasks(resposta.data); // O FastAPI, por meio do get, vai devolver a lista de tarefas desse ID
-            } catch (erro) {
-                console.error("Erro ao buscar tarefas do banco:", erro);
-            }
-        };
+        const carregarDadosdoBanco = async () => {
+          if (!userId) return;
+          try {
+            
+            // Busca as tarefas
+            const resTarefas = await axios.get(`http://127.0.0.1:8000/tarefas/${userId}`)
+            setTasks(resTarefas.data);
 
-        carregarTarefas();
+            // Busca as finanças
+            const resFinancas = await axios.get(`http://127.0.0.1:8000/transacoes/${userId}`)
+            setTransactions(resFinancas.data);
+
+          } catch (erro) {
+            console.error("Erro ao carregar os dados", erro);
+          }
+        }
+
+        carregarDadosDoBanco();
     }, [userId]);
 
     // Adiciona a tarefa no SQLite
