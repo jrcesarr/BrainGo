@@ -19,7 +19,7 @@ export default function Dashboard({ userName, userId }) {
 
     // O useEffect carrega as tarefas e as finanças do banco de dados assim que o usuário entra na tela
     useEffect(() => {
-        const carregarDadosdoBanco = async () => {
+        const carregarDadosDoBanco = async () => {
           if (!userId) return;
           try {
             
@@ -95,10 +95,13 @@ export default function Dashboard({ userName, userId }) {
     };
 
     const saldoTotal = transactions.reduce((acumulador, atual) => {
-        if (atual.type === 'entrada') {
-            return acumulador + atual.value;
+      // Se o valor não existir, a conta não quebra
+      const valorNum = parseFloat(atual.valor) || 0;
+      
+      if (atual.tipo === 'entrada') {
+            return acumulador + valorNum;
         } else {
-            return acumulador - atual.value;
+            return acumulador - valorNum;
         }
     }, 0);
 
