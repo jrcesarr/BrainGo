@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // 1. Importar o Axios
 import './Dashboard.css';
 
-// 2. Recebemos o userId vindo lá do estado global do seu login
+// A Dashboard atua como área logada de Tarefas e Finanças, relativas a cada usuário.
 export default function Dashboard({ userName, userId }) {
+    // Seleciona a Tab visível na Tela (tarefas é a inicial).
     const [activeTab, setActiveTab] = useState('tarefas');
     
     // --- ESTADOS DAS TAREFAS ---
@@ -16,13 +17,13 @@ export default function Dashboard({ userName, userId }) {
     const [finValue, setFinValue] = useState('');
     const [finType, setFinType] = useState('entrada');
 
-    // 3. EFFECT: Carrega as tarefas do banco de dados assim que o usuário entra na tela
+    // O useEffect carrega as tarefas do banco de dados assim que o usuário entra na tela
     useEffect(() => {
         const carregarTarefas = async () => {
             if (!userId) return;
             try {
                 const resposta = await axios.get(`http://127.0.0.1:8000/tarefas/${userId}`);
-                setTasks(resposta.data); // O FastAPI vai devolver a lista de tarefas desse ID
+                setTasks(resposta.data); // O FastAPI, por meio do get, vai devolver a lista de tarefas desse ID
             } catch (erro) {
                 console.error("Erro ao buscar tarefas do banco:", erro);
             }
@@ -31,7 +32,7 @@ export default function Dashboard({ userName, userId }) {
         carregarTarefas();
     }, [userId]);
 
-    // 4. FUNÇÃO ATUALIZADA: Adiciona a tarefa no SQLite
+    // Adiciona a tarefa no SQLite
     const addTask = async () => {
         if (newTask.trim() === '') return;
         
@@ -41,7 +42,7 @@ export default function Dashboard({ userName, userId }) {
                 usuario_id: userId // Enviando o dono da tarefa
             });
 
-            // Adiciona na lista do React o item novinho que acabou de ser gerado pelo banco (com ID real)
+            // Adiciona na lista do React o item que acabou de ser gerado pelo banco (com ID real)
             setTasks([...tasks, resposta.data]);
             setNewTask('');
         } catch (erro) {
@@ -49,13 +50,13 @@ export default function Dashboard({ userName, userId }) {
         }
     };
 
-    // 5. FUNÇÃO ATUALIZADA: Alterna o status (concluída/pendente) no SQLite
+    // Alterna o status (concluída/pendente) no SQLite
     const toggleTask = async (id) => {
         try {
-            // Dispara a rota PUT que criamos para inverter o status
+            // Dispara a rota PUT  para inverter o status
             const resposta = await axios.put(`http://127.0.0.1:8000/tarefas/${id}/toggle`);
             
-            // Atualiza o estado do React com os dados modificados vindos do Back-end
+            // Atualiza o estado do React com os dados modificados vindos do Backend
             setTasks(tasks.map(t => t.id === id ? resposta.data : t));
         } catch (erro) {
             alert("Não foi possível atualizar o status da tarefa.");
@@ -116,7 +117,6 @@ export default function Dashboard({ userName, userId }) {
               <div className="tasks-card">
                 <div className="card-header">
                   <h3>Minhas Tarefas</h3>
-                  {/* Corrigido para ler "concluida" (sem acento) conforme veio do modelo Python */}
                   <span>{tasks.filter(t => t.concluida).length}/{tasks.length} completas</span>
                 </div>
 
@@ -137,12 +137,10 @@ export default function Dashboard({ userName, userId }) {
                     tasks.map(task => (
                       <div 
                         key={task.id} 
-                        // Corrigido para ler "concluida"
                         className={`task-item ${task.concluida ? 'completed' : ''}`}
                         onClick={() => toggleTask(task.id)}
                       >
                         <input type="checkbox" checked={task.concluida} readOnly />
-                        {/* Corrigido para ler "texto" conforme definido no models.py */}
                         <span>{task.texto}</span>
                       </div>
                     ))
