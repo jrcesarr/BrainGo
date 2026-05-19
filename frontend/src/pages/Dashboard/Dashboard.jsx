@@ -220,21 +220,34 @@ export default function Dashboard({ userName, userId }) {
                   </button>
                 </form>
 
-                <div className="transaction-list">
-                  <h3>Histórico</h3>
-                  {transactions.length === 0 ? (
-                    <p className="empty-message">Nenhum movimento registrado.</p>
-                  ) : (
-                    transactions.map(t => (
-                      <div key={t.id} className={`transaction-item ${t.tipo}`}>
-                        <span>{t.descricao}</span>
-                        <strong>
-                          {t.tipo === 'entrada' ? '+' : '-'} R$ {t.valor.toFixed(2)}
-                        </strong>
-                      </div>
-                    ))
-                  )}
-                </div>
+            {/* Histórico Financeiro*/}
+            <div className="transaction-list">
+              <h3>Histórico</h3>
+              {transactions.length === 0 ? (
+                <p className="empty-message">Nenhum movimento registrado.</p>
+              ) : (
+                transactions.map(t => (
+                  <div key={t.id} className={`transaction-item ${t.tipo}`}>
+                  <span>{t.descricao}</span>
+          
+                  <div className="transaction-right">
+                  <strong>
+                  {t.tipo === 'entrada' ? '+' : '-'} R$ {t.valor.toFixed(2)}
+                  </strong>
+            
+                  <button 
+                    className="delete-btn" 
+                    onClick={() => deleteTransaction(t.id)}
+                    title="Excluir registro"
+                  >
+                   ×
+                  </button>
+            </div>
+            
+          </div>
+        ))
+      )}
+    </div>
               </div>
             )}
           </main>
