@@ -86,3 +86,17 @@
   animation-delay: 0.8s;
   will-change: transform;
 }
+
+.home-cadastro p {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.home-cadastro a {
+  text-decoration: none;
+  color: var( --color-brand);
+  line-height: 1.4;
+  cursor: pointer;
+}
