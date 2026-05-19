@@ -27,10 +27,39 @@ app.add_middleware(
 # 1. Cria as tabelas no banco de dados
 models.Base.metadata.create_all(bind=engine)
 
-# 2. Define o "molde" dos dados que vamos receber do frontend/usuário
+# 2. molde do frontend/usuário
 class UsuarioCriar(BaseModel):
     usuario: str
     senha: str
+
+# moldes para as Tarefas
+class TarefaCriar(BaseModel):
+    texto: str
+    usuario_id: int  # O React vai enviar o ID de quem está logado
+
+class TarefaResposta(BaseModel):
+    id: int
+    texto: str
+    concluida: bool
+    usuario_id: int
+    class Config:
+        from_attributes = True
+
+# Novos moldes para as Finanças
+class TransacaoCriar(BaseModel):
+    descricao: str
+    valor: float
+    tipo: str  # 'entrada' ou 'saida'
+    usuario_id: int
+
+class TransacaoResposta(BaseModel):
+    id: int
+    descricao: str
+    valor: float
+    tipo: str
+    usuario_id: int
+    class Config:
+        from_attributes = True
 
 # 3. Função padrão para abrir a conexão com o banco e fechar logo depois
 def get_db():
@@ -89,3 +118,31 @@ def login_usuario(dados_login: UsuarioCriar, db: Session = Depends(get_db)):
         "id": usuario_db.id,
         "usuario": usuario_db.usuario
     }
+
+# --- ROTAS DE TAREFAS ---
+
+# 1. Buscar todas as tarefas de um usuário específico
+@app.get("/tarefas/{usuario_id}", response_model=list[TarefaResposta])
+def listar_tarefas(usuario_id: int, db: Session = Depends(get_db)):
+    return db.query(models.Tarefa).filter(models.Tarefa.usuario_id == usuario_id).all()
+
+# 2. Criar uma nova tarefa
+@app.post("/tarefas/", response_model=TarefaResposta)
+def criar_tarefa(nova_tarefa: TarefaCriar, db: Session = Depends(get_db)):
+    tarefa_db = models.Tarefa(texto=nova_tarefa.texto, usuario_id=nova_tarefa.usuario_id)
+    db.add(tarefa_db)
+    db.commit()
+    db.refresh(tarefa_db)
+    return tarefa_db
+
+# 3. Inverter o status de concluída da tarefa
+@app.put("/tarefas/{tarefa_id}/toggle", response_model=TarefaResposta)
+def alternar_tarefa(tarefa_id: int, db: Session = Depends(get_db)):
+    tarefa_db = db.query(models.Tarefa).filter(models.Tarefa.id == tarefa_id).first()
+    if not tarefa_db:
+        raise HTTPException(status_code=404, detail="Tarefa não encontrada")
+    
+    tarefa_db.concluida = not tarefa_db.concluida  # Inverte o valor booleano
+    db.commit()
+    db.refresh(tarefa_db)
+    return tarefa_db
