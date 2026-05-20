@@ -32,7 +32,11 @@ function App() {
   } 
 
   // Existindo o usuário, a tela de Dashboard é renderizada
-  return <Dashboard userName={user.nome} userId={user.id} />;
+  return <Dashboard 
+  userName={user.nome} 
+  userId={user.id} 
+  onLogout={() => setUser(null)}
+  />;
 }
 
 export default App;
