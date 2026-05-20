@@ -141,12 +141,17 @@ export default function Dashboard({ userName, userId, onLogout }) {
         <div className="dashboard-container">
           <header className="dashboard-header">
             <h1>Olá, {userName}!</h1>
-            <p>{activeTab === 'tarefas' ? 'Organize suas tarefas do dia' : 'Gerencie suas finanças'}</p>
 
-            {/* Botão de saída */}
-            <button className="logout-button" onClick={onLogout}>
-              Sair 🚪
-            </button>
+            <div className ="dashboard-desc">
+              <p>{activeTab === 'tarefas' ? 'Organize suas tarefas do dia' : 'Gerencie suas finanças'}</p>
+
+              {/* Botão de saída */}
+              <button className="logout-button" onClick={onLogout}>
+                <span>Sair</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+              </button>
+            </div>
+
           </header>
 
           <main className="dashboard-content">
