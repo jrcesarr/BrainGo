@@ -57,6 +57,22 @@ export default function Dashboard({ userName, userId }) {
         }
     };
 
+    // Deleta a tarefa no SQLite
+    const deleteTask = async (id, e) => {
+        // e.stopPropagation() impede que o clique no botão ative o toggleTask da linha
+        e.stopPropagation(); 
+
+        try {
+            // Dispara o DELETE enviando o ID da tarefa 
+            await axios.delete(`http://127.0.0.1:8000/tarefas/${id}`);
+
+            // O .filter() mantém apenas as tarefas que têm o ID diferente do que foi deletado
+            setTasks(tasks.filter(t => t.id !== id));
+        } catch (erro) {
+            alert("Não foi possível deletar a tarefa.");
+        }
+    };
+
     // Alterna o status (concluída/pendente) no SQLite
     const toggleTask = async (id) => {
         try {
