@@ -189,8 +189,21 @@ export default function Dashboard({ userName, userId }) {
                         className={`task-item ${task.concluida ? 'completed' : ''}`}
                         onClick={() => toggleTask(task.id)}
                       >
-                        <input type="checkbox" checked={task.concluida} readOnly />
-                        <span>{task.texto}</span>
+
+                        {/* Lado esquerdo: Checkbox e Texto */}
+                        <div className="task-left">
+                          <input type="checkbox" checked={task.concluida} readOnly />
+                          <span>{task.texto}</span>
+                        </div>
+
+                        {/* Lado direito: Botão de Deletar */}
+                        <button 
+                          className="task-delete-btn" 
+                          onClick={(e) => deleteTask(task.id, e)} // Passamos o evento 'e' aqui
+                          title="Excluir tarefa"
+                        >
+                        ×
+                        </button>
                       </div>
                     ))
                   )}
