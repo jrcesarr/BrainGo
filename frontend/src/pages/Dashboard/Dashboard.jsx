@@ -3,7 +3,7 @@ import axios from 'axios'; // 1. Importar o Axios
 import './Dashboard.css';
 
 // A Dashboard atua como área logada de Tarefas e Finanças, relativas a cada usuário.
-export default function Dashboard({ userName, userId }) {
+export default function Dashboard({ userName, userId, onLogout }) {
     // Seleciona a Tab visível na Tela (tarefas é a inicial).
     const [activeTab, setActiveTab] = useState('tarefas');
     
@@ -142,6 +142,11 @@ export default function Dashboard({ userName, userId }) {
           <header className="dashboard-header">
             <h1>Olá, {userName}!</h1>
             <p>{activeTab === 'tarefas' ? 'Organize suas tarefas do dia' : 'Gerencie suas finanças'}</p>
+
+            {/* Botão de saída */}
+            <button className="logout-button" onClick={onLogout}>
+              Sair 🚪
+            </button>
           </header>
 
           <main className="dashboard-content">
