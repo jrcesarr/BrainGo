@@ -147,6 +147,17 @@ def alternar_tarefa(tarefa_id: int, db: Session = Depends(get_db)):
     db.refresh(tarefa_db)
     return tarefa_db
 
+# 4. Deletar uma tarefa
+@app.delete("/tarefas/{tarefa_id}")
+def deletar_tarefa(tarefa_id: int, db: Session = Depends(get_db)):
+    tarefas_db = db.query(models.Tarefa).filter(models.Tarefa.id == tarefa_id).first()
+    if not tarefas_db:
+        raise HTTPException(status_code=404, detail="Registro não encontrado")
+    
+    db.delete(tarefas_db)
+    db.commit()
+    return {"mensagem": "Registro deletado com sucesso!"}
+
 # --- ROTAS DE FINANÇAS (TRANSAÇÕES) ---
 
 # 1. Buscar todo o histórico financeiro de um usuário específico
