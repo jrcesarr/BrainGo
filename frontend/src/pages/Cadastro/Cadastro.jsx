@@ -6,6 +6,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Cadastro.css';
 
+const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+
 export default function Cadastro() {
   const [nome, setNome] = useState('');
   const [senha, setSenha] = useState('');
@@ -22,7 +24,7 @@ export default function Cadastro() {
 
     try {
         // Chama a API de usuários para cadastrarmento
-        const resposta = await axios.post("http://127.0.0.1:8000/usuarios/", {
+        const resposta = await axios.post(`${API_URL}/login`, {
         usuario: nome,
         senha: senha
         });
