@@ -3,6 +3,9 @@ import axios from 'axios'; // 1. Importar o Axios
 import './Dashboard.css';
 
 // A Dashboard atua como área logada de Tarefas e Finanças, relativas a cada usuário.
+
+const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+
 export default function Dashboard({ userName, userId, onLogout }) {
     // Seleciona a Tab visível na Tela (tarefas é a inicial).
     const [activeTab, setActiveTab] = useState('tarefas');
@@ -24,11 +27,11 @@ export default function Dashboard({ userName, userId, onLogout }) {
           try {
             
             // Busca as tarefas
-            const resTarefas = await axios.get(`http://127.0.0.1:8000/tarefas/${userId}`)
+            const resTarefas = await axios.get(`${API_URL}/tarefas/${userId}`)
             setTasks(resTarefas.data);
 
             // Busca as finanças
-            const resFinancas = await axios.get(`http://127.0.0.1:8000/transacoes/${userId}`)
+            const resFinancas = await axios.get(`${API_URL}/transacoes/${userId}`)
             setTransactions(resFinancas.data);
 
           } catch (erro) {
@@ -44,7 +47,7 @@ export default function Dashboard({ userName, userId, onLogout }) {
         if (newTask.trim() === '') return;
         
         try {
-            const resposta = await axios.post("http://127.0.0.1:8000/tarefas/", {
+            const resposta = await axios.post(`${API_URL}/tarefas`, {
                 texto: newTask,
                 usuario_id: userId // Enviando o dono da tarefa
             });
@@ -64,7 +67,7 @@ export default function Dashboard({ userName, userId, onLogout }) {
 
         try {
             // Dispara o DELETE enviando o ID da tarefa 
-            await axios.delete(`http://127.0.0.1:8000/tarefas/${id}`);
+            await axios.delete(`${API_URL}/tarefas/${id}`);
 
             // O .filter() mantém apenas as tarefas que têm o ID diferente do que foi deletado
             setTasks(tasks.filter(t => t.id !== id));
@@ -77,7 +80,7 @@ export default function Dashboard({ userName, userId, onLogout }) {
     const toggleTask = async (id) => {
         try {
             // Dispara a rota PUT  para inverter o status
-            const resposta = await axios.put(`http://127.0.0.1:8000/tarefas/${id}/toggle`);
+            const resposta = await axios.put(`${API_URL}/tarefas/${id}/toggle`);
             
             // Atualiza o estado do React com os dados modificados vindos do Backend
             setTasks(tasks.map(t => t.id === id ? resposta.data : t));
@@ -92,7 +95,7 @@ export default function Dashboard({ userName, userId, onLogout }) {
         if (finDescription.trim() === '' || finValue === '') return;
 
         try {
-            const resposta = await axios.post("http://127.0.0.1:8000/transacoes/", {
+            const resposta = await axios.post(`${API_URL}/transacoes`, {
                 descricao: finDescription,
                 valor: parseFloat(finValue),
                 tipo: finType,
@@ -117,7 +120,7 @@ export default function Dashboard({ userName, userId, onLogout }) {
 
         try {
             // Dispara o DELETE enviando o ID da transação na URL
-            await axios.delete(`http://127.0.0.1:8000/transacoes/${id}`);
+            await axios.delete(`${API_URL}/transacoes/${id}`);
             // O .filter() cria uma nova lista mantendo apenas quem tem o ID diferente do que foi deletado
             setTransactions(transactions.filter(t => t.id !== id));
 
