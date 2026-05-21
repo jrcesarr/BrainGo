@@ -8,6 +8,8 @@ import axios from 'axios';
 
 // Interage com a API para coletar os dados necessários 
 
+const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+
 export default function Home( {onLogin} ) {
   // Controla o que está sendo escrito em tempo real
   const [nome, setNome] = useState('');
@@ -23,7 +25,7 @@ export default function Home( {onLogin} ) {
     
     try { 
       // Chama a API de login enviando os dados digitados
-      const resposta = await axios.post("http://127.0.0.1:8000/login", {
+      const resposta = await axios.post(`${API_URL}/login`, {
         usuario: nome,
         senha: senha
       });
