@@ -14,7 +14,7 @@ origins = [
     "http://localhost:3000",  # React puro
     "http://localhost:5173",  # Vite (React/Vue)
     "http://127.0.0.1:5500",  # Live Server do VS Code (HTML puro)
-    "https://brain-go.vercel.app/"
+    "https://brain-go.vercel.app"
 ]
 
 app.add_middleware(
