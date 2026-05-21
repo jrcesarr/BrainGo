@@ -18,7 +18,7 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,       # Permite os sites da lista acima
+    allow_origins=["*"],       # Permite os sites da lista acima quando o valor é origins. Deixando o padrão * para facilitar o deploy
     allow_credentials=True,
     allow_methods=["*"],         # Permite POST, GET, PUT, DELETE, etc.
     allow_headers=["*"],         # Permite qualquer cabeçalho de envio
