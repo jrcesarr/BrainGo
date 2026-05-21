@@ -24,7 +24,7 @@ export default function Cadastro() {
 
     try {
         // Chama a API de usuários para cadastrarmento
-        const resposta = await axios.post(`${API_URL}/cadastro`, {
+        const resposta = await axios.post(`${API_URL}/usuarios`, {
         usuario: nome,
         senha: senha
         });
